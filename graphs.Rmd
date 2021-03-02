@@ -1,4 +1,5 @@
 # This is the data from an experiment. The IV is the experimenal condition with 4 levels. Its moderator is General Conspiracy Belief. The DV will be changed in each graph.
+*My original interpretation from looking at plot 1 was that the moderator is message type, while the IV was supposed to be the level of conspiracy. I might be misunderstanding something though!*
 
 ```{r}
 library(tidyverse)
@@ -12,28 +13,30 @@ data <- read.csv(here("data.csv"))
 
 # Create Plot 1: DV is Intention to vaccinate their fictional children.
 # P.S. I cannot rename one of my variables: from "ï..GenConBlf" into "GenConBlf". If you could, please let me know.
-
+*It looks like the variable was able to be renamed into GenConBlf! I will go ahead and change the variable name in the ggplot code below*
 ```{r}
-data %>% ggplot(aes(ï..GenConBlf, VacIntMMR))+
+data %>% ggplot(aes(GenConBlf, VacIntMMR))+
   geom_point(aes(color = Condition), alpha = .3)+
   geom_smooth(aes(color = Condition), method = "lm", se = FALSE)+
-  labs(title = "Do parents with conspiracy belief intent to vaccinate their child?",
+  labs(title = "Do parents with conspiracy belief intend to vaccinate their child?",
        subtitle = "An experiment of different message types",
-       x = "MMR vaccination intention",
-       y = "Level of general conspiracy belief")+
+       y = "MMR vaccination intention",
+       x = "Level of general conspiracy belief")+
   scale_color_manual(values = c("orchid", "salmon", "darkturquoise", "chartreuse3"),
                      name = "Message Type", 
                      breaks =  c("Control", "Fact", "Narrative", "Hybrid"),
                      labels = c("No exposure", "Scientific Fact", "Narrative", "Hybrid"))+
   theme_minimal()
-  
+
+#Strengths: The plot is aesthetically pleasing and  easy to interpret! I like that you included the points along with geom smooth to show some of the variability. The color choice is very pretty! Are these colors also color-blind friendly
+#Possible suggestions: To make the graph more easily comprehensible, is it possible to provide information on what the 1-5 levels of the IV and DV mean? For example does a 5 on the MMR vaccination intention scale indicate that someone is very likely to vaccinate? Does 1 indicate "not very likely"? If so, perhaps you could include those labels instead of 1-5 or along with 1-5. Also since the level of intent is your DV, I think it would make more sense to switch your x and y variable. (I made this edit above. I think you just mixed up the labeling of the x and y axes, but that you completed the correct fo;)
 ```
 
 #Let's look at each condition separately. I might create an animation at the end.
 #This graph is for Control Condition.
 ```{r}
 data %>% 
-  ggplot(aes(ï..GenConBlf, VacIntMMR))+
+  ggplot(aes(GenConBlf, VacIntMMR))+
   geom_point(color = "grey80")+
   geom_point(data = filter(data, Condition == "Control"), color = "orchid")+
   geom_smooth(data = subset(data, Condition == "Control"), method = "lm", color = "orchid", se = FALSE)+
@@ -42,40 +45,43 @@ data %>%
        x = "MMR vaccination intention",
        y = "Level of general conspiracy belief")+
   theme_minimal()
+
+#Strength: Nice! all of the separate condition graphs look pretty clear. 
+#Suggestion: I think that if you switch the x & y axis labels again, the plot would be more effective. 
 ```
 
 # This graph is for Fact Condition
 ```{r}
 data %>% 
-  ggplot(aes(ï..GenConBlf, VacIntMMR))+
+  ggplot(aes(GenConBlf, VacIntMMR))+
   geom_point(color = "grey80")+
   geom_point(data = filter(data, Condition == "Fact"), color = "salmon")+
   geom_smooth(data = subset(data, Condition == "Fact"), method = "lm", color = "salmon", se = FALSE)+
   labs(title = "Do parents with conspiracy belief intent to vaccinate their child?",
        subtitle = "An experiment of different message types",
-       x = "MMR vaccination intention",
-       y = "Level of general conspiracy belief")+
+       y = "MMR vaccination intention",
+       x = "Level of general conspiracy belief")+
   theme_minimal()
 ```
 
 #This graph is for Narrative Condition
 ```{r}
 data %>% 
-  ggplot(aes(ï..GenConBlf, VacIntMMR))+
+  ggplot(aes(GenConBlf, VacIntMMR))+
   geom_point(color = "grey80")+
   geom_point(data = filter(data, Condition == "Narrative"), color = "darkturquoise")+
   geom_smooth(data = subset(data, Condition == "Narrative"), method = "lm", color = "darkturquoise", se = FALSE)+
   labs(title = "Do parents with conspiracy belief intent to vaccinate their child?",
        subtitle = "An experiment of different message types",
-       x = "MMR vaccination intention",
-       y = "Level of general conspiracy belief")+
+       y = "MMR vaccination intention",
+       x = "Level of general conspiracy belief")+
   theme_minimal()
   
 ```
 # This graph is for Hybrid Condition
 ```{r}
 data %>% 
-  ggplot(aes(ï..GenConBlf, VacIntMMR))+
+  ggplot(aes(GenConBlf, VacIntMMR))+
   geom_point(color = "grey80")+
   geom_point(data = filter(data, Condition == "Hybrid"), color = "chartreuse3")+
   geom_smooth(data = subset(data, Condition == "Hybrid"), method = "lm", color = "chartreuse3", se = FALSE)+
@@ -92,7 +98,7 @@ data %>%
 
 ```{r}
 data <- data %>% group_by(SlfPolIdeo, age) %>% 
-  mutate(avg_GenCon = mean(ï..GenConBlf, na.rm = TRUE)) %>% 
+  mutate(avg_GenCon = mean(GenConBlf, na.rm = TRUE)) %>% 
   ungroup()
 ```
 
@@ -103,13 +109,17 @@ data %>% filter(age != " ") %>%
   ggplot(aes(age, avg_GenCon))+
   geom_col(aes(fill = SlfPolIdeo), position = "dodge")+
   labs(title = "Conspiracy belief in general of participants across age and political party",
-       x = "Age groups",
+       x = " ",
        y = "Average conspiracy belief in general")+
   scale_fill_manual(values = c("blue1", "darkmagenta", "firebrick2"),
                      name = "Self-identified \npolitical party", 
                      breaks =  c("Democrats", "Independents", "Republicans"),
                      labels = c("Democrats", "Independents", "Republicans"))+
   theme_minimal()
+
+#Strengths: nice use of colors and bar charts here. It's quick and easy to see the differences across the ages and political parties without having to spend too much time measuring or starting at the plot. 
+#Possible suggestions: I think she plot would be a nice example where defining what 1-4 means for the y variable. That's interesting that there are no Democratic participants 18-20 group, and no independents in the oldest age group. I think you can remove the x label here so that there's less things distracting from the data viz. 
+
 ```
 
 #Plot 3: I might want to create an animation showing that, compared to conspiracy beliefs in general, conspiracy belief likely higher among the same group of population.
@@ -127,7 +137,7 @@ data$Edu <- recode_factor(data$Edu, "High school degree or equivalent (e.g. GED)
 ```{r}
 data %>% filter(Edu != "NA") %>%  
   ggplot(aes(x = PolIdeo, y = Edu))+
-  geom_tile(aes(fill = ï..GenConBlf), color = "white")+
+  geom_tile(aes(fill = GenConBlf), color = "white")+
   scale_fill_viridis_c(option = "magma")+
   labs(title = "Conspiracy belief in general of participants across political ideology and education",
        x = "Political ideology",
@@ -136,6 +146,9 @@ data %>% filter(Edu != "NA") %>%
   theme_minimal()+
   theme(plot.title = element_text(hjust = 0.65),
     axis.text.x = element_text(angle = 25, hjust = 1))
+
+#Strengths: great use of a heat map to mix things up a bit and display your point 
+#Possible suggestions: If possible I would change the order of the color spectrum, so that the higher level of conspiracy belief is actually dark purple color, and the lower level (1) is yellow  
 ```
 ```{r}
 data %>% filter(Edu != "NA") %>%  
@@ -154,13 +167,16 @@ data %>% filter(Edu != "NA") %>%
 #Plot 4:
 ```{r}
 data %>% filter(Gender == c("Female", "Male")) %>% 
-  ggplot(aes(ï..GenConBlf)) +
+  ggplot(aes(GenConBlf)) +
   geom_density(aes(fill = Gender), color = "white", alpha = .3)+
   labs(title = "Males vs Females: Who has higher general conspiracy belief?",
        x = "Level of general conspiracy belief",
        y = "Density")+
   theme_minimal()+
   theme(plot.title = element_text(hjust = 0.5))
+#strengths: quick and easy way to compare difference in how males and females hold conspiracy beliefs
+#Note: it would be interesting to see a heat map looking at how general conspiracy beliefs and vaccination conspiracy beliefs correlate! I'm wondering whether a bar graph, or maybe even box plots might be another good way to display the level of conspiracy beliefs.
+
 ```
 
 ```{r}
@@ -172,6 +188,8 @@ data %>% filter(Gender == c("Female", "Male")) %>%
        y = "Density")+
   theme_minimal()+
   theme(plot.title = element_text(hjust = 0.5))
+
+#Same thoughts/feedback as what I listed for the previous plot above!
 ```
 
 
