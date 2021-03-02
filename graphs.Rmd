@@ -118,8 +118,7 @@ data %>% filter(age != " ") %>%
   theme_minimal()
 
 #Strengths: nice use of colors and bar charts here. It's quick and easy to see the differences across the ages and political parties without having to spend too much time measuring or starting at the plot. 
-#Possible suggestions: I think she plot would be a nice example where defining what 1-4 means for the y variable. That's interesting that there are no Democratic participants 18-20 group, and no independents in the oldest age group. I think you can remove the x label here so that there's less things distracting from the data viz. 
-
+#Possible suggestions: I think she plot would be a nice example where defining what 1-4 means for the y variable. That's interesting that there are no Democratic participants 18-20 group, and no independents in the oldest age group. I think you can remove the x label here so that there's less things distracting from the data viz. I might remove the horizontal lines here. I don't think they add too much.
 ```
 
 #Plot 3: I might want to create an animation showing that, compared to conspiracy beliefs in general, conspiracy belief likely higher among the same group of population.
@@ -175,7 +174,7 @@ data %>% filter(Gender == c("Female", "Male")) %>%
   theme_minimal()+
   theme(plot.title = element_text(hjust = 0.5))
 #strengths: quick and easy way to compare difference in how males and females hold conspiracy beliefs
-#Note: it would be interesting to see a heat map looking at how general conspiracy beliefs and vaccination conspiracy beliefs correlate! I'm wondering whether a bar graph, or maybe even box plots might be another good way to display the level of conspiracy beliefs.
+#Note: it would be interesting to see a heat map looking at how general conspiracy beliefs and vaccination conspiracy beliefs correlate! I'm wondering whether a bar graph, or maybe even box plots might be another good way to display the level of conspiracy beliefs. It could be helpful to change the y axis labels and do count instead of density
 
 ```
 
